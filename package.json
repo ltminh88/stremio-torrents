@@ -1,0 +1,16 @@
+{
+  "name": "stremio-torrents",
+  "version": "1.0.0",
+  "description": "Stremio addon tổng hợp torrent từ YTS, EZTV, ThePirateBay, SolidTorrents",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.10"
+  }
+}
