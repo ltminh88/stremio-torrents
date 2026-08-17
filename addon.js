@@ -9,10 +9,11 @@ import * as yts from "./lib/sources/yts.js";
 import * as eztv from "./lib/sources/eztv.js";
 import * as tpb from "./lib/sources/tpb.js";
 import * as solidtorrents from "./lib/sources/solidtorrents.js";
+import * as torrentscsv from "./lib/sources/torrentscsv.js";
 
 const { addonBuilder } = sdk;
 
-const SOURCES = [yts, eztv, tpb, solidtorrents];
+const SOURCES = [yts, eztv, torrentscsv, tpb, solidtorrents];
 const MAX_STREAMS = 40;
 const CACHE_TTL = 30 * 60 * 1000; // 30 phút
 const streamCache = new Map();
