@@ -10,10 +10,13 @@ import * as eztv from "./lib/sources/eztv.js";
 import * as tpb from "./lib/sources/tpb.js";
 import * as solidtorrents from "./lib/sources/solidtorrents.js";
 import * as torrentscsv from "./lib/sources/torrentscsv.js";
+import * as knaben from "./lib/sources/knaben.js";
 
 const { addonBuilder } = sdk;
 
-const SOURCES = [yts, eztv, torrentscsv, tpb, solidtorrents];
+// Knaben + torrentscsv thân thiện datacenter IP (sống trên Render);
+// tpb/solidtorrents chỉ sống khi chạy local (auto-skip nếu bị 403).
+const SOURCES = [yts, eztv, torrentscsv, knaben, tpb, solidtorrents];
 const MAX_STREAMS = 40;
 const CACHE_TTL = 30 * 60 * 1000; // 30 phút
 const streamCache = new Map();
@@ -23,7 +26,7 @@ const manifest = {
   version: "1.0.0",
   name: "Torrent Search",
   description:
-    "Tổng hợp torrent từ YTS, EZTV, ThePirateBay, SolidTorrents - tự động tìm nguồn cho mọi phim/series trên Stremio.",
+    "Tổng hợp torrent từ YTS, EZTV, TorrentsCSV, Knaben, ThePirateBay, SolidTorrents - tự động tìm nguồn cho mọi phim/series trên Stremio.",
   resources: ["stream"],
   types: ["movie", "series"],
   idPrefixes: ["tt"],

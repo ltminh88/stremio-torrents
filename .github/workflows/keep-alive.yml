@@ -1,0 +1,29 @@
+# Giữ Render free-tier không "ngủ": ping manifest mỗi ~12 phút.
+# Chạy trên hạ tầng GitHub Actions -> KHÔNG cần bật máy tính.
+#
+# Thiết lập 1 lần: Repo Settings > Secrets and variables > Actions > Variables
+#   -> New repository variable: RENDER_URL = https://<ten-service>.onrender.com
+# (nếu chưa set, job dưới sẽ tự bỏ qua, không báo đỏ)
+name: keep-alive
+
+on:
+  schedule:
+    - cron: "*/12 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping manifest
+        env:
+          RENDER_URL: ${{ vars.RENDER_URL }}
+        run: |
+          if [ -z "$RENDER_URL" ]; then
+            echo "RENDER_URL chưa được set (repo variable) -> bỏ qua ping."
+            exit 0
+          fi
+          echo "Ping $RENDER_URL/manifest.json"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -m 30 "$RENDER_URL/manifest.json" || echo 000)
+          echo "HTTP $code"
+          [ "$code" = "200" ] || echo "::warning::Ping trả về $code (service có thể đang cold-start)"
