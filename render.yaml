@@ -3,6 +3,7 @@ services:
     name: stremio-torrents
     runtime: node
     plan: free
+    autoDeploy: true
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /manifest.json
