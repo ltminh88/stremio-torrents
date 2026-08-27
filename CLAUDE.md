@@ -8,6 +8,7 @@ Live: `https://stremio-torrents.onrender.com/manifest.json`
 
 1. **Stream theo IMDB** (`tt...`): resolve Cinemeta → tên/năm → gom 6 nguồn → magnet (giống Torrentio). Chỉ chạy khi phim/series có trên Stremio (Cinemeta).
 2. **Catalog search** (v1.1): ô Search trong Stremio → gõ từ khoá → danh sách → bấm phát thẳng. Không cần phim có sẵn trên Stremio. Catalog id `torrentsearch-search`, `extra: search (isRequired)` → chỉ hiện khi search, không phải hàng browse.
+   - **Dropdown độ phân giải** (v1.2): catalog có thêm `extra` `genre` = [Tất cả,4K,1080p,720p,480p,SD] → hàng 3 dropdown cạnh Movie/torrentsearch-search; handler lọc kết quả theo `qualityFrom(title)`. Thêm/đổi `extra` là ĐỔI MANIFEST → cần cài lại/khởi động lại Stremio mới thấy dropdown.
    - **GOTCHA poster:** Stremio Search/Discover **bắt buộc có `poster`** mới render thẻ bấm được; thẻ không poster → ô xám skeleton không click được. → `catalog.js` gắn poster tự sinh qua `placehold.co` (ảnh chữ quality+seeds, không cần API key). Tên release Stremio tự hiện dưới thẻ.
 
 ## Cấu trúc
