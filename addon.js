@@ -24,7 +24,7 @@ const streamCache = new Map();
 
 const manifest = {
   id: "community.torrentsearch",
-  version: "1.1.1",
+  version: "1.2.0",
   name: "Torrent Search",
   description:
     "Tổng hợp torrent từ YTS, EZTV, TorrentsCSV, Knaben, ThePirateBay, SolidTorrents. Tự tìm nguồn cho phim/series (IMDB) + có ô Search torrent trực tiếp: gõ từ khoá ra danh sách, bấm phát ngay.",
@@ -36,7 +36,14 @@ const manifest = {
       type: "movie",
       id: "torrentsearch-search",
       name: "Torrent Search",
-      extra: [{ name: "search", isRequired: true }],
+      extra: [
+        { name: "search", isRequired: true },
+        {
+          name: "genre",
+          options: ["Tất cả", "4K", "1080p", "720p", "480p", "SD"],
+          isRequired: false,
+        },
+      ],
     },
   ],
 };
@@ -64,8 +71,13 @@ builder.defineCatalogHandler(async ({ id, extra }) => {
   if (id !== "torrentsearch-search") return { metas: [] };
   const query = (extra?.search || "").trim();
   if (!query) return { metas: [] };
+  const genre = extra?.genre;
   try {
-    const torrents = await catalog.searchCatalog(query);
+    let torrents = await catalog.searchCatalog(query);
+    // Lọc theo độ phân giải nếu người dùng chọn (bỏ qua khi "Tất cả").
+    if (genre && genre !== "Tất cả") {
+      torrents = torrents.filter((t) => qualityFrom(t.title) === genre);
+    }
     return { metas: torrents.map(catalog.toMetaPreview) };
   } catch (err) {
     console.error("Catalog error:", err.message);
