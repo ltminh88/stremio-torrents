@@ -24,7 +24,7 @@ const streamCache = new Map();
 
 const manifest = {
   id: "community.torrentsearch",
-  version: "1.1.0",
+  version: "1.1.1",
   name: "Torrent Search",
   description:
     "Tổng hợp torrent từ YTS, EZTV, TorrentsCSV, Knaben, ThePirateBay, SolidTorrents. Tự tìm nguồn cho phim/series (IMDB) + có ô Search torrent trực tiếp: gõ từ khoá ra danh sách, bấm phát ngay.",
